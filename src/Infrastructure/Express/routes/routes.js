@@ -1,17 +1,18 @@
-const {Router} = require('express');
-const AuthController = require("src/Infrastructure/Express/Controllers/authController");
-const validate = require("src/Infrastructure/Express/middlewares/validationMiddleware");
-const { registerSchema, loginSchema } = require("src/Infrastructure/Express/ValidationSchemas/authSchemas");
+const { Router } = require('express');
+const AuthController = require("../controllers/AuthController");
+const validate = require("../middlewares/validationMiddleware");
+const { registerSchema, loginSchema } = require("../ValidationSchemas/authSchemas");
+const JWTProvider = require('src/Infrastructure/Providers/JWTProvider');
 
-module.exports = (registerUserCase, loginUserUseCase) => {
+module.exports = (registerUserCase, loginUserUseCase, logoutUserUseCase) => {
     const router = Router();
-    const authController = new AuthController(registerUserCase, loginUserUseCase);
+    const authController = new AuthController(registerUserCase, loginUserUseCase, logoutUserUseCase);
+    const jwtProvider = new JWTProvider();
+    const authMiddleware = require('../controllers/authMiddleware')(jwtProvider);
 
     router.post('/register', validate(registerSchema), authController.register.bind(authController));
     router.post('/login', validate(loginSchema), authController.login.bind(authController));
-    router.post('/logout', authController.logout.bind(authController)); // Adicione esta linha
-
-    return router;
+    router.post('/logout', authMiddleware, authController.logout.bind(authController));
 
     return router;
 };

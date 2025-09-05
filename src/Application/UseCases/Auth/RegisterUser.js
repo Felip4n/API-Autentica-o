@@ -1,14 +1,13 @@
-const User = require('src/Domain/User/User');
 const UserOutput = require('src/Application/DTos/UserOutput');
 const UserAlreadyExistsException = require('../../../Domain/Exceptions/UserAlreadyExistsException');
 
 class RegisterUser {
-    
-    constructor(userRepository) {
-        this.userRepository = userRepository; //IUserRepository
+    constructor(userRepository, jwtProvider) {
+        this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
     }
 
-    async execute(input) { //'input' é uma instância de RegisterUserInput
+    async execute(input) {
         const existingUser = await this.userRepository.findByEmail(input.email);
         if (existingUser) {
             throw new UserAlreadyExistsException('User with this email already exists.');
@@ -19,10 +18,10 @@ class RegisterUser {
             email: input.email,
             password: input.password
         });
+        
+        const token = this.jwtProvider.generateToken({ userId: user.id, email: user.email });
 
-        // AQUI ESTÁ A CORREÇÃO:
-        // Passamos 'null' como o primeiro argumento (token) e 'user' como o segundo.
-        return new UserOutput(null, user);
+        return new UserOutput(token, user);
     }
 }
 
