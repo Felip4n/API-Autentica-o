@@ -2,18 +2,15 @@
 
 const fs = require('fs');
 const path = require('path');
-// 1. Importe a CLASSE Sequelize com 'S' maiúsculo.
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-// Corrigi um espaçamento estranho no caminho do require
-const config = require(__dirname + '/../../../../config/config.js')[env];s
+const config = require(__dirname + '/../../../../config/config.js')[env];
 const db = {};
 
-// 2. Declare a variável da instância APENAS UMA VEZ.
+
 let sequelize;
 
-// 3. Use a CLASSE 'Sequelize' para criar a instância.
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -44,7 +41,6 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-// 6. Removi a segunda atribuição que era idêntica
-db.Sequelize = Sequelize; // É uma boa prática exportar a classe também
+db.Sequelize = Sequelize; 
 
 module.exports = db;

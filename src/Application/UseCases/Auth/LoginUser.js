@@ -14,11 +14,12 @@ class LoginUser {
             throw new InvalidCredentialsException("Invalid email or password.");
         }
 
-        const isPasswordValid = await user.validatePassword(input.password);
+        const isPasswordValid = await user.comparePassword(input.password);
 
         if (!isPasswordValid) {
             throw new InvalidCredentialsException("Invalid email or password.");
         }
+
 
         const token = this.jwtProvider.generateToken({ userId: user.id,email: user.email.value });
 

@@ -3,17 +3,27 @@ const UserModel = require('./Models').User;
 const User = require('src/Domain/User/User');
 
 class SequelizeUserRepository extends IUserRepository {
-    async save(user) {
-        const userData = user.toObject();
-        const savedUser = await UserModel.create(userData);
-        return savedUser;
-    }
+async save(user) {
+  const createdUser = await UserModel.create({
+    name: user.name,
+    email: user.email,
+    password: user.password
+  });
+
+  return new User(
+    createdUser.name,
+    createdUser.email,
+    createdUser.password,
+    createdUser.id 
+  );
+}
+
+
 
     async findById(id) {
         const userData = await UserModel.findByPk(id);
         if (!userData) return null;
         
-        // Criar instância do User com os dados do banco
         return new User(
             userData.name,
             userData.email,
@@ -28,7 +38,6 @@ class SequelizeUserRepository extends IUserRepository {
         });
         if (!userData) return null;
         
-        // Criar instância do User com os dados do banco
         return new User(
             userData.name,
             userData.email,

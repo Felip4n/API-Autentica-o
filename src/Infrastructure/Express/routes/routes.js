@@ -9,6 +9,9 @@ module.exports = (registerUserCase, loginUserUseCase) => {
 
     router.post('/register', validate(registerSchema), authController.register.bind(authController));
     router.post('/login', validate(loginSchema), authController.login.bind(authController));
+    router.post('/logout', authController.logout.bind(authController)); // Adicione esta linha
+
+    return router;
 
     return router;
 };
