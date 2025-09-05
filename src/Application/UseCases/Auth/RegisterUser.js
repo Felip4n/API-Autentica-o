@@ -1,6 +1,7 @@
 const User = require('src/Domain/User/User');
 const UserOutput = require('src/Application/DTos/UserOutput');
 
+
 class RegisterUser {
     constructor(userRepository) {
         this.userRepository = userRepository; //IUserRepository

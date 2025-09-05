@@ -1,4 +1,4 @@
-class registerUserInput {
+class RegisterUserInput {
     constructor(name, email, password) {
         if (!name || !email || !password) {
             throw new Error("name, email, and password are required.");
@@ -8,5 +8,5 @@ class registerUserInput {
         this.password = password;
     }
 }
-module.exports = registerUserInput;
+module.exports = RegisterUserInput;
 //# sourceMappingURL=RegisterUserInput.js.map

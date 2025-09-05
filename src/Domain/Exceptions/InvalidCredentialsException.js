@@ -5,4 +5,4 @@ class InvalidCredentialsException extends Error {
         this.statusCode = 401; // opcional: código HTTP para autenticação falhou
     }
 }
-module.exports = InvalidCredentialsException.js;
+module.exports = InvalidCredentialsException;

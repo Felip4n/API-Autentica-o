@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt.js');//usado para hashing
+const bcrypt = require('bcrypt');//usado para hashing
 
 class Password {
     constructor(value,isHashed = false) {

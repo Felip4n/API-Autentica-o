@@ -1,10 +1,9 @@
-const { sequelize } = require('./sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('src/config');
 
 const sequelize = new Sequelize(config.db.url, {
-    dialect: config.db.dialect, // Postgres, MySQL, etc
-    loggin: false, //Desibilitar logs do sequelize para a produção
+    dialect: config.db.dialect,
+    logging: false, // Era 'loggin'
 }); 
 
 module.exports = sequelize;
-// Configurar a conexão com o banco de dados

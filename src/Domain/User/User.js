@@ -20,7 +20,7 @@ class User {
         return await this.password.compare(plainPassword);
     }
 
-    async validatePassword(plainPassword) {
+    async validatePassword(newPassword) {
         this.password = new Password(newPassword);
     }
 

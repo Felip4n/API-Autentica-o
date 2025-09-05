@@ -11,8 +11,8 @@ const fs = require('fs');
 const errorHandler = require('./Infrastructure/Express/middlewares/errorHandler');
 const SequelizeUserRepository = require('./Infrastructure/Persistence/Sequelize/SequelizeUserRepository');
 const RedisTokenBlacklistRepository = require('./Infrastructure/Persistence/Redis/RedisTokenBlacklistRepository');
-const jwtProvider = require('./Infrastructure/Providers/jwtProvider');
-const authRoutes = require('./Infrastructure/Express/routes/auth.routes');
+const JWTProvider = require('./Infrastructure/Providers/jwtProvider');
+const authRoutes = require('./Infrastructure/Express/routes/routes');
 
 //importação dos casos de uso
 const RegisterUser = require('./Application/UseCases/Auth/RegisterUser');
@@ -30,12 +30,13 @@ app.use(morgan('dev')); //loga requisições HTTP no console
 const userRepository = new SequelizeUserRepository();
 const tokenBlacklistRepository = new RedisTokenBlacklistRepository();
 
+
 //Provedores
 const jwtProvider = new JWTProvider();
 
 //use cases
-const registerUserUseCase = new RegisterUser(userRepository);
-const loginUserUseCase = new LoginUser(userRepository, jwtProvider);    
+const registerUserUseCase = new RegisterUser(userRepository, jwtProvider);
+const loginUserUseCase = new LoginUser(userRepository, jwtProvider);  
 
 //Rotas
 
@@ -43,7 +44,7 @@ app.use('/auth', authRoutes(registerUserUseCase, loginUserUseCase));
 
 //Configuração do Swagger
 try {
-    const swaggerDocument = yaml.load(fs.readFileSync('./docs/swagger.yaml', 'utf8'));
+    const swaggerDocument = yaml.load(fs.readFileSync('./Api-docs/swagger.yml', 'utf8'));
     //Acessível em http://localhost:3000/api-docs
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 } catch (e) {

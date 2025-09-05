@@ -1,6 +1,6 @@
 class Email {
     constructor(value) {
-        if (!value.isValid(value)) {
+        if (!this.isValid(value)) {
             throw new Error("Invalid email format.");
         }
         this.value = value;

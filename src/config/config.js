@@ -1,17 +1,18 @@
-const appConfig =require('./index.js');
+// Carrega as variáveis de ambiente do arquivo .env para process.env
+require('dotenv').config();
 
 module.exports = {
-    development: {
-    url: appConfig.db.url,
-    dialect: appConfig.db.dialect,
-},
-    test: {
-    url: appConfig.db.url, 
-    dialect: appConfig.db.dialect,
-},
-    production: {
-    url: appConfig.db.url,
-    dialect: appConfig.db.dialect,
-},
+  development: {
+    // Lê a URL do banco de dados diretamente das variáveis de ambiente
+    url: process.env.DB_URL || 'postgres://user:password@localhost:5432/mydb',
+    dialect: process.env.DB_DIALECT || 'postgres',
+  },
+  test: {
+    url: process.env.DB_URL || 'postgres://user:password@localhost:5432/mydb',
+    dialect: process.env.DB_DIALECT || 'postgres',
+  },
+  production: {
+    url: process.env.DB_URL || 'postgres://user:password@localhost:5432/mydb',
+    dialect: process.env.DB_DIALECT || 'postgres',
+  },
 };
-// Configurações do banco de dados para diferentes ambientes

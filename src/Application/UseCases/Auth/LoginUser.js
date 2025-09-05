@@ -1,6 +1,6 @@
 //const e = require("cors");
-const AuthOutput = require("src/Application/DTos/UserOutput");
-const InvalidCredentialsException = require("src/Domain/Exceptions/InvalidCredentialsError");
+const UserOutput = require("src/Application/DTOs/UserOutput");
+const InvalidCredentialsException = require('../../../Domain/Exceptions/InvalidCredentialsException');
 
 class LoginUser {
   constructor(userRepository, jwtProvider) {
@@ -22,7 +22,7 @@ class LoginUser {
 
         const token = this.jwtProvider.generateToken({ userId: user.id,email: user.email.value });
 
-        return new AuthOutput(token, {
+        return new UserOutput(token, {
             id: user.id,
             name: user.name.value,
             email: user.email.value
